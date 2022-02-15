@@ -1,0 +1,17 @@
+{
+	"name": "create_ext_table_from dedicatedpool",
+	"properties": {
+		"content": {
+			"query": "CREATE DATABASE SCOPED CREDENTIAL externalDemo\nWITH\n\tIDENTITY = 'Managed Identity'\nGo\n\n\n\n--Drop DATABASE Scoped credential externalDemo\n\ncreate master key ENCRYPTION BY PASSWORD = '!Q\"W#E4r5t6y'\n\n\ncreate external DATA SOURCE externalDemo\nWITH(\n\n\tCREDENTIAL = externalDemo,\n\tlocation = 'abfss://default@dldataengineer.dfs.core.windows.net',\n\ttype = HADOOP\n)\n\n--DROP EXTERNAL DATA SOURCE externalDemo\n\ncreate external file FORMAT synapseParquet\nWITH\n(\t\n\tFORMAT_TYPE = PARQUET,\n\tDATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n--DROP EXTERNAL FILE FORMAT synapseParquet\n\n\n\ncreate external table dbo.NYCTaxi\n(\n\t[DateID] int NOT NULL,\n    [MedallionID] int NOT NULL,\n    [HackneyLicenseID] int NOT NULL,\n    [PickupTimeID] int NOT NULL,\n    [DropoffTimeID] int NOT NULL,\n    [PickupGeographyID] int NULL,\n    [DropoffGeographyID] int NULL,\n    [PickupLatitude] float NULL,\n    [PickupLongitude] float NULL,\n    [PickupLatLong] varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n    [DropoffLatitude] float NULL,\n    [DropoffLongitude] float NULL,\n    [DropoffLatLong] varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n    [PassengerCount] int NULL,\n    [TripDurationSeconds] int NULL,\n    [TripDistanceMiles] float NULL,\n    [PaymentType] varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n    [FareAmount] money NULL,\n    [SurchargeAmount] money NULL,\n    [TaxAmount] money NULL,\n    [TipAmount] money NULL,\n    [TollsAmount] money NULL,\n    [TotalAmount] money NULL\n)\nWITH\n(\n\tLOCATION = '/data/NYCTripSmall.parquet',\n\tDATA_SOURCE = externalDemo,\n\tFILE_FORMAT = synapseParquet\n\n)\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dedicatedpool01",
+				"poolName": "dedicatedpool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

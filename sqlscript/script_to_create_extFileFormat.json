@@ -1,0 +1,17 @@
+{
+	"name": "script_to_create_extFileFormat",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL FILE FORMAT [ParquetFileFormat] WITH\n(\n\tFORMAT_TYPE = PARQUET,\n\tDATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "demoDB",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

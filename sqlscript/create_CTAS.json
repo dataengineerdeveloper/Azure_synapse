@@ -1,0 +1,17 @@
+{
+	"name": "create_CTAS",
+	"properties": {
+		"content": {
+			"query": "\n--create table employees\nCREATE TABLE [dbo].[employees]\n(\n    empID int NOT NULL,\n    empName nvarchar(50) ,\n    gender nvarchar(10)\n)\nWITH\n(\n    DISTRIBUTION = HASH (empID),\n    CLUSTERED COLUMNSTORE INDEX\n)\nGO\n\n--insert data\ninsert into dbo.employees values(1, 'luis','male')\ninsert into dbo.employees values(2, 'teresa','female')\ninsert into dbo.employees values(3, 'edu','male')\n\n--create table employees_new\ncreate TABLE dbo.employeesNew\nwith(\n\n    DISTRIBUTION = hash(empName),\n    CLUSTERED COLUMNSTORE INDEX\n\n) AS\nselect * from dbo.employees\n\n--create table employeesnew1, com a diferença que na parte da distribution vou usar o round robin\n\ncreate TABLE dbo.employeesNew1\nwith(\n\n    DISTRIBUTION = ROUND_ROBIN,\n    CLUSTERED COLUMNSTORE INDEX\n\n) AS\nselect * from dbo.employees\n\n--a unica de diferença disto para o ctas é que ano consigo escolher o tipo de distribution, por default vai ficar round Robin\nselect *\ninto dbo.employeesnew2\nfrom [dbo].[employees]\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dedicatedpool01",
+				"poolName": "dedicatedpool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

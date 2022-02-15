@@ -1,0 +1,17 @@
+{
+	"name": "create_CETAS",
+	"properties": {
+		"content": {
+			"query": "--CREATE SCHEMA NYCTaxi\n\nCREATE EXTERNAL TABLE NYCTaxi.PassagersCountStas\nwith(\n    --linked service. > under wokrspace i'll have the default container\n    Location = 'default/NYCTaxi/AggData/',\n    DATA_SOURCE = DemoDataSource,\n    FILE_FORMAT = ParquetFileFormat\n) as\n    select PassengerCount, \n        sum(TripDistanceMiles) as sumtripdistance,\n        avg(TripDistanceMiles) as avgtripdistance\n    from \n    OPENROWSET(\n        --full path to get the file\n        BULK 'https://dldataengineer.blob.core.windows.net/nyctaxi/NYCTripSmall.parquet',\n        FORMAT = 'PARQUET'\n\n    )\n    AS [rows]\n    where TripDistanceMiles > 0 and PassengerCount > 0\n    Group by PassengerCount\n    GO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "demoDB",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

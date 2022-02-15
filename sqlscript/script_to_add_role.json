@@ -1,0 +1,17 @@
+{
+	"name": "script_to_add_role",
+	"properties": {
+		"content": {
+			"query": "create user [luisescnogueira1990@gmail.com] from EXTERNAL provider;\nexec sp_addrolemember 'db_owner', 'luisescnogueira1990@gmail.com'",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dedicatedpool01",
+				"poolName": "dedicatedpool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

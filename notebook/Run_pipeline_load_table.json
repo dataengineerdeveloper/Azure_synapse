@@ -1,0 +1,87 @@
+{
+	"name": "Run_pipeline_load_table",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "spark1",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "73607e82-94b7-43fa-9bf1-21f6b41f394c"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/4b208000-9c96-4106-8a2a-e6ad383d73f5/resourceGroups/RG-DataEngineer/providers/Microsoft.Synapse/workspaces/asa-dataengineerworkspace/bigDataPools/spark1",
+				"name": "spark1",
+				"type": "Spark",
+				"endpoint": "https://asa-dataengineerworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark1",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "python"
+					}
+				},
+				"source": [
+					"%%pyspark\n",
+					"\n",
+					"#DEMO 2\n",
+					"\n",
+					"df = spark.sql('select * from nyctaxi.passengercountsstats')\n",
+					"#display(df)\n",
+					"#aqui vou fazer o repartition para agregar todos os ficheiros que estavam a ser gerados, em apenas um\n",
+					"df1 = df.repartition(1)\n",
+					"df1.write.mode('overwrite').csv('/NYCTaxi/csvfile')\n",
+					"df1.write.mode('overwrite').parquet('/NYCTaxi/Parquetfile')"
+				],
+				"attachments": null,
+				"execution_count": 5
+			}
+		]
+	}
+}

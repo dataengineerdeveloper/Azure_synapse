@@ -1,0 +1,17 @@
+{
+	"name": "script_to _create_masterkey_extDataSource",
+	"properties": {
+		"content": {
+			"query": "USE demoDB\ngo\n\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = '!Q\"W#E4r5t6y'\nCREATE DATABASE SCOPED CREDENTIAL sqladminuser\nWITH IDENTITY = 'SHARED ACCESS SIGNATURE',\nSECRET = '?sv=2020-08-04&ss=bfqt&srt=sco&sp=rwdlacupx&se=2022-02-09T07:59:26Z&st=2022-02-08T23:59:26Z&spr=https&sig=WZtlg4Z%2F9r8WZ3HoIxKdSZMYLOa6QnDRDOvz1Y3Pfus%3D'\nGO\n\nCREATE EXTERNAL DATA SOURCE DemoDataSource WITH(\n\n\tLOCATION = 'https://dldataengineer.blob.core.windows.net/',\n\tCREDENTIAL = sqladminuser\n\n);",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "demoDB",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

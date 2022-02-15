@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "\nCREATE CREDENTIAL [comosdbdataengineer]\nWITH IDENTITY = 'SHARED ACCESS SIGNATURE', SECRET = 'k5YGdk7QCarN5iEKRiXskU11Cfs0fsFmC3Q3v8Xt21RkrJsj5R0SRQl1CVN5YQqHtA4JjvYX4RQwosuuQ8D1Yg=='\nGO\n\n\nSELECT TOP 100 \nRideId\n,PickupLocationId\n,Rating\n,Feedback\nFROM OPENROWSET(​PROVIDER = 'CosmosDB',\n                CONNECTION = 'Account=comosdbdataengineer;Database=RidesDB',\n                OBJECT = 'RidesFeedback',\n                SERVER_CREDENTIAL = 'comosdbdataengineer'\n) AS [RidesFeedback]\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
